@@ -100,6 +100,10 @@ button:disabled {
   align-self: flex-start;
   padding: 8px 18px;
   font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
 }
 
 .outputs {
