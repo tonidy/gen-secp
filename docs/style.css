@@ -119,6 +119,28 @@ button:disabled {
   line-height: 1.5;
 }
 
+.copy-feedback {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  background: rgba(15, 23, 42, 0.45);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.copy-feedback .check {
+  color: #4ade80;
+  font-size: 1rem;
+}
+
+.copy-feedback[hidden] {
+  display: none;
+}
+
 .copy-btn {
   display: inline-flex;
   align-items: center;

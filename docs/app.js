@@ -8,6 +8,7 @@ const outputs = {
   uncompressed: document.querySelector("[data-output='uncompressed']"),
 };
 const copyButtons = document.querySelectorAll(".copy-btn");
+const copyFeedbacks = document.querySelectorAll(".copy-feedback");
 
 function setStatus(message, state = "info") {
   statusEl.textContent = message;
@@ -44,6 +45,9 @@ async function generateKeys() {
       btn.hidden = false;
       btn.classList.remove("copied");
     });
+    copyFeedbacks.forEach((box) => {
+      box.hidden = true;
+    });
     setStatus("New keypair generated", "success");
   } catch (err) {
     console.error(err);
@@ -74,6 +78,15 @@ async function handleCopy(event) {
     button.classList.add("copied");
     const labelEl = valueEl.closest(".output")?.querySelector(".output-label");
     const label = labelEl ? labelEl.textContent.trim() : key;
+    const feedbackEl = valueEl.closest(".output")?.querySelector(".copy-feedback");
+    if (feedbackEl) {
+      copyFeedbacks.forEach((box) => {
+        if (box !== feedbackEl) {
+          box.hidden = true;
+        }
+      });
+      feedbackEl.hidden = false;
+    }
     setStatus(`${label} copied`, "success");
     window.setTimeout(() => button.classList.remove("copied"), 1600);
   } catch (err) {
