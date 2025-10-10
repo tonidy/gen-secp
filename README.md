@@ -67,7 +67,7 @@ Uses the original coincurve implementation (requires the extra above) and writes
 
 ## Browser demo
 
-The static site under `docs/` is deployed to GitHub Pages. It bundles the same Python implementation (executed through Pyodide WebAssembly) to generate keypairs client-side. Open https://gen-secp.github.io and click “Generate Keypair”.
+The static site under `docs/` is deployed to GitHub Pages. It bundles the same Python implementation (executed through Pyodide WebAssembly) to generate keypairs client-side. Open https://tonidy.github.io/gen-secp and click “Generate Keypair”.
 
 ## Troubleshooting
 
