@@ -14,7 +14,7 @@
   </head>
   <body>
     <main>
-      <h1>secp256k1 key generator</h1>
+      <h1>Secp256k1 key generator</h1>
       <p>
         Generate a fresh secp256k1 keypair directly in your browser.
         The Python logic from <code>gen_secp/main.py</code> runs inside WebAssembly (Pyodide),
@@ -24,18 +24,36 @@
         <button type="button" data-generate>Generate Keypair</button>
         <span class="status" data-status data-state="info">Initialising runtime…</span>
       </div>
-      <section>
-        <div class="output">
-          <div class="output-label">Private key (hex)</div>
-          <div data-output="private">—</div>
+      <section class="outputs">
+        <div class="output" data-key="private">
+          <div class="output-top">
+            <div class="output-label">Private key (hex)</div>
+            <button type="button" class="copy-btn" data-copy="private" aria-label="Copy private key">
+              <span class="copy-icon" aria-hidden="true"></span>
+              Copy
+            </button>
+          </div>
+          <div class="output-value" data-output="private">—</div>
         </div>
-        <div class="output">
-          <div class="output-label">Compressed public key</div>
-          <div data-output="compressed">—</div>
+        <div class="output" data-key="compressed">
+          <div class="output-top">
+            <div class="output-label">Compressed public key</div>
+            <button type="button" class="copy-btn" data-copy="compressed" aria-label="Copy compressed public key">
+              <span class="copy-icon" aria-hidden="true"></span>
+              Copy
+            </button>
+          </div>
+          <div class="output-value" data-output="compressed">—</div>
         </div>
-        <div class="output">
-          <div class="output-label">Uncompressed public key</div>
-          <div data-output="uncompressed">—</div>
+        <div class="output" data-key="uncompressed">
+          <div class="output-top">
+            <div class="output-label">Uncompressed public key</div>
+            <button type="button" class="copy-btn" data-copy="uncompressed" aria-label="Copy uncompressed public key">
+              <span class="copy-icon" aria-hidden="true"></span>
+              Copy
+            </button>
+          </div>
+          <div class="output-value" data-output="uncompressed">—</div>
         </div>
       </section>
       <a

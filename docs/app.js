@@ -7,6 +7,7 @@ const outputs = {
   compressed: document.querySelector("[data-output='compressed']"),
   uncompressed: document.querySelector("[data-output='uncompressed']"),
 };
+const copyButtons = document.querySelectorAll(".copy-btn");
 
 function setStatus(message, state = "info") {
   statusEl.textContent = message;
@@ -50,6 +51,34 @@ async function generateKeys() {
 }
 
 buttonEl.addEventListener("click", generateKeys);
+
+async function handleCopy(event) {
+  const button = event.currentTarget;
+  const key = button.dataset.copy;
+  const valueEl = outputs[key];
+  if (!valueEl) {
+    return;
+  }
+  const text = valueEl.textContent.trim();
+  if (!text || text === "—") {
+    setStatus("Generate a keypair before copying", "error");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    copyButtons.forEach((btn) => btn.classList.remove("copied"));
+    button.classList.add("copied");
+    setStatus(`${key.charAt(0).toUpperCase()}${key.slice(1)} copied`, "success");
+    window.setTimeout(() => button.classList.remove("copied"), 1600);
+  } catch (err) {
+    console.error(err);
+    setStatus("Copy failed. Copy manually instead.", "error");
+  }
+}
+
+copyButtons.forEach((button) => {
+  button.addEventListener("click", handleCopy);
+});
 
 (async () => {
   try {
