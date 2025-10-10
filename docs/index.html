@@ -22,14 +22,6 @@
       </p>
       <div class="controls">
         <button type="button" data-generate>Generate Keypair</button>
-        <button
-          type="button"
-          class="secondary-btn"
-          data-toggle-advanced
-          aria-expanded="false"
-        >
-          Show Advanced
-        </button>
         <span class="status" data-status data-state="info">Initialising runtime…</span>
       </div>
       <section class="outputs">
@@ -103,6 +95,14 @@
           </div>
           <div class="output-value" data-output="compressed">—</div>
         </div>
+        <button
+          type="button"
+          class="secondary-btn advanced-toggle-btn"
+          data-toggle-advanced
+          aria-expanded="false"
+        >
+          Show Advanced
+        </button>
         <div class="output" data-key="uncompressed" data-advanced-panel hidden>
           <div class="output-top">
             <div class="output-label">Uncompressed Public Key</div>
