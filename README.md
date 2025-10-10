@@ -1,6 +1,6 @@
 # gen-secp
 
-gen-secp is a small Python command-line tool for generating keys and other secure artifacts. It provides a simple CLI interface to create and manage generated secrets for local development and testing.
+gen-secp is a lightweight Python CLI for generating secp256k1 keypairs. It quickly prints fresh keys for local development, and can optionally emit detailed output or export PEM files for reuse.
 
 ## Getting Started
 
