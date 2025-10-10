@@ -119,17 +119,30 @@ button:disabled {
   line-height: 1.5;
 }
 
+.copy-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .copy-feedback {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translate(12px, -50%);
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(15, 23, 42, 0.7);
   border-radius: 12px;
   padding: 6px 12px;
   font-size: 0.85rem;
   color: #e2e8f0;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
 }
 
 .copy-feedback .check {
@@ -139,6 +152,11 @@ button:disabled {
 
 .copy-feedback[hidden] {
   display: none;
+}
+
+.copy-feedback.visible {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
 .copy-btn {

@@ -9,6 +9,10 @@ const outputs = {
 };
 const copyButtons = document.querySelectorAll(".copy-btn");
 const copyFeedbacks = document.querySelectorAll(".copy-feedback");
+const COPY_FEEDBACK_DURATION = 500;
+const COPY_FEEDBACK_FADE = 180;
+const feedbackTimers = new WeakMap();
+const feedbackHideTimers = new WeakMap();
 
 function setStatus(message, state = "info") {
   statusEl.textContent = message;
@@ -46,6 +50,17 @@ async function generateKeys() {
       btn.classList.remove("copied");
     });
     copyFeedbacks.forEach((box) => {
+      const timer = feedbackTimers.get(box);
+      if (timer) {
+        clearTimeout(timer);
+      }
+      const hideTimer = feedbackHideTimers.get(box);
+      if (hideTimer) {
+        clearTimeout(hideTimer);
+      }
+      feedbackTimers.delete(box);
+      feedbackHideTimers.delete(box);
+      box.classList.remove("visible");
       box.hidden = true;
     });
     setStatus("New keypair generated", "success");
@@ -74,7 +89,10 @@ async function handleCopy(event) {
   }
   try {
     await navigator.clipboard.writeText(text);
-    copyButtons.forEach((btn) => btn.classList.remove("copied"));
+    copyButtons.forEach((btn) => {
+      btn.classList.remove("copied");
+      btn.hidden = false;
+    });
     button.classList.add("copied");
     const labelEl = valueEl.closest(".output")?.querySelector(".output-label");
     const label = labelEl ? labelEl.textContent.trim() : key;
@@ -82,13 +100,45 @@ async function handleCopy(event) {
     if (feedbackEl) {
       copyFeedbacks.forEach((box) => {
         if (box !== feedbackEl) {
+          const timer = feedbackTimers.get(box);
+          if (timer) {
+            clearTimeout(timer);
+          }
+          const hideTimer = feedbackHideTimers.get(box);
+          if (hideTimer) {
+            clearTimeout(hideTimer);
+          }
+          feedbackTimers.delete(box);
+          feedbackHideTimers.delete(box);
+          box.classList.remove("visible");
           box.hidden = true;
         }
       });
+      const existingTimer = feedbackTimers.get(feedbackEl);
+      if (existingTimer) {
+        clearTimeout(existingTimer);
+      }
+      const existingHide = feedbackHideTimers.get(feedbackEl);
+      if (existingHide) {
+        clearTimeout(existingHide);
+      }
+      feedbackTimers.delete(feedbackEl);
+      feedbackHideTimers.delete(feedbackEl);
       feedbackEl.hidden = false;
+      requestAnimationFrame(() => feedbackEl.classList.add("visible"));
+      const timer = window.setTimeout(() => {
+        feedbackEl.classList.remove("visible");
+        const hideTimer = window.setTimeout(() => {
+          feedbackEl.hidden = true;
+          feedbackHideTimers.delete(feedbackEl);
+        }, COPY_FEEDBACK_FADE);
+        feedbackHideTimers.set(feedbackEl, hideTimer);
+        feedbackTimers.delete(feedbackEl);
+      }, COPY_FEEDBACK_DURATION);
+      feedbackTimers.set(feedbackEl, timer);
     }
     setStatus(`${label} copied`, "success");
-    window.setTimeout(() => button.classList.remove("copied"), 1600);
+    window.setTimeout(() => button.classList.remove("copied"), COPY_FEEDBACK_DURATION);
   } catch (err) {
     console.error(err);
     setStatus("Copy failed. Copy manually instead.", "error");
