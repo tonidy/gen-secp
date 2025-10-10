@@ -40,6 +40,10 @@ async function generateKeys() {
     outputs.private.textContent = data.private;
     outputs.compressed.textContent = data.compressed;
     outputs.uncompressed.textContent = data.uncompressed;
+    copyButtons.forEach((btn) => {
+      btn.hidden = false;
+      btn.classList.remove("copied");
+    });
     setStatus("New keypair generated", "success");
   } catch (err) {
     console.error(err);
@@ -68,7 +72,9 @@ async function handleCopy(event) {
     await navigator.clipboard.writeText(text);
     copyButtons.forEach((btn) => btn.classList.remove("copied"));
     button.classList.add("copied");
-    setStatus(`${key.charAt(0).toUpperCase()}${key.slice(1)} copied`, "success");
+    const labelEl = valueEl.closest(".output")?.querySelector(".output-label");
+    const label = labelEl ? labelEl.textContent.trim() : key;
+    setStatus(`${label} copied`, "success");
     window.setTimeout(() => button.classList.remove("copied"), 1600);
   } catch (err) {
     console.error(err);
