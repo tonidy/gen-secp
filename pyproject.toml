@@ -1,0 +1,14 @@
+[project]
+name = "gen-secp"
+version = "0.1.0"
+description = "Generate secp256k1 keypair CLI"
+requires-python = ">=3.13"
+dependencies = [
+  "coincurve>=21.0.0"
+]
+
+[project.scripts]
+genkey = "gen_secp.main:cli"
+
+[tool.uv]
+package = true
