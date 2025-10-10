@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>gen-secp | secp256k1 key generator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main>
+      <h1>secp256k1 key generator</h1>
+      <p>
+        Generate a fresh secp256k1 keypair directly in your browser.
+        The Python logic from <code>gen_secp/main.py</code> runs inside WebAssembly (Pyodide),
+        so the private key never leaves this page.
+      </p>
+      <div class="controls">
+        <button type="button" data-generate>Generate Keypair</button>
+        <span class="status" data-status data-state="info">Initialising runtime…</span>
+      </div>
+      <section>
+        <div class="output">
+          <div class="output-label">Private key (hex)</div>
+          <div data-output="private">—</div>
+        </div>
+        <div class="output">
+          <div class="output-label">Compressed public key</div>
+          <div data-output="compressed">—</div>
+        </div>
+        <div class="output">
+          <div class="output-label">Uncompressed public key</div>
+          <div data-output="uncompressed">—</div>
+        </div>
+      </section>
+      <a
+        class="repo-link"
+        href="https://github.com/tonidy/gen-secp"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View source on GitHub
+      </a>
+    </main>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.28.3/full/pyodide.js"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+:root {
+  color-scheme: dark light;
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at top left, #1f2937, #0f172a 60%);
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 720px;
+  width: min(90vw, 720px);
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.45);
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0 0 24px;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.status {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.status[data-state="success"] {
+  color: #4ade80;
+  opacity: 1;
+}
+
+.status[data-state="error"] {
+  color: #f87171;
+  opacity: 1;
+}
+
+button {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.35);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.output {
+  background: rgba(148, 163, 184, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: "JetBrains Mono", "Fira Code", "SFMono-Regular", Menlo, monospace;
+  word-break: break-all;
+  margin-bottom: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.output-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #a5b4fc;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.repo-link:hover {
+  color: #c7d2fe;
+}
