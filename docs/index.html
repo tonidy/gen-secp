@@ -22,12 +22,20 @@
       </p>
       <div class="controls">
         <button type="button" data-generate>Generate Keypair</button>
+        <button
+          type="button"
+          class="secondary-btn"
+          data-toggle-advanced
+          aria-expanded="false"
+        >
+          Show Advanced
+        </button>
         <span class="status" data-status data-state="info">Initialising runtime…</span>
       </div>
       <section class="outputs">
         <div class="output" data-key="private">
           <div class="output-top">
-            <div class="output-label">Private key (hex)</div>
+            <div class="output-label">Private Key</div>
             <div class="copy-wrapper">
               <button
                 type="button"
@@ -62,13 +70,13 @@
         </div>
         <div class="output" data-key="compressed">
           <div class="output-top">
-            <div class="output-label">Compressed public key</div>
+            <div class="output-label" data-label="compressed">Public Key</div>
             <div class="copy-wrapper">
               <button
                 type="button"
                 class="copy-btn"
                 data-copy="compressed"
-                aria-label="Copy compressed public key"
+                aria-label="Copy Public Key"
                 hidden
               >
                 <svg
@@ -95,15 +103,16 @@
           </div>
           <div class="output-value" data-output="compressed">—</div>
         </div>
-        <div class="output" data-key="uncompressed">
+        <div class="output" data-key="uncompressed" data-advanced-panel hidden>
           <div class="output-top">
-            <div class="output-label">Uncompressed public key</div>
+            <div class="output-label">Uncompressed Public Key</div>
             <div class="copy-wrapper">
               <button
                 type="button"
                 class="copy-btn"
                 data-copy="uncompressed"
-                aria-label="Copy uncompressed public key"
+                aria-label="Copy Uncompressed Public Key"
+                data-advanced-control
                 hidden
               >
                 <svg

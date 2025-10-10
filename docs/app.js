@@ -2,17 +2,23 @@ let pyodideReady = null;
 
 const statusEl = document.querySelector("[data-status]");
 const buttonEl = document.querySelector("[data-generate]");
+const advancedToggle = document.querySelector("[data-toggle-advanced]");
 const outputs = {
   private: document.querySelector("[data-output='private']"),
   compressed: document.querySelector("[data-output='compressed']"),
   uncompressed: document.querySelector("[data-output='uncompressed']"),
 };
+const compressedLabelEl = document.querySelector("[data-label='compressed']");
+const compressedCopyButton = document.querySelector("[data-copy='compressed']");
+const advancedPanels = document.querySelectorAll("[data-advanced-panel]");
+const advancedControls = document.querySelectorAll("[data-advanced-control]");
 const copyButtons = document.querySelectorAll(".copy-btn");
 const copyFeedbacks = document.querySelectorAll(".copy-feedback");
 const COPY_FEEDBACK_DURATION = 500;
 const COPY_FEEDBACK_FADE = 180;
 const feedbackTimers = new WeakMap();
 const feedbackHideTimers = new WeakMap();
+let advancedMode = false;
 
 function setStatus(message, state = "info") {
   statusEl.textContent = message;
@@ -35,6 +41,36 @@ async function initPyodide() {
   return pyodideReady;
 }
 
+function syncAdvancedState() {
+  advancedPanels.forEach((panel) => {
+    panel.hidden = !advancedMode;
+  });
+  if (compressedLabelEl) {
+    compressedLabelEl.textContent = advancedMode ? "Compressed Public Key" : "Public Key";
+  }
+  if (compressedCopyButton) {
+    compressedCopyButton.setAttribute(
+      "aria-label",
+      advancedMode ? "Copy Compressed Public Key" : "Copy Public Key",
+    );
+  }
+  if (advancedToggle) {
+    advancedToggle.textContent = advancedMode ? "Hide Advanced" : "Show Advanced";
+    advancedToggle.setAttribute("aria-expanded", String(advancedMode));
+  }
+  advancedControls.forEach((control) => {
+    if (!advancedMode) {
+      control.hidden = true;
+      return;
+    }
+    const copyKey = control.dataset.copy;
+    const valueEl = copyKey ? outputs[copyKey] : null;
+    const value = valueEl ? valueEl.textContent.trim() : "";
+    const hasValue = value && value !== "—";
+    control.hidden = !hasValue;
+  });
+}
+
 async function generateKeys() {
   buttonEl.disabled = true;
   buttonEl.textContent = "Generating…";
@@ -46,7 +82,8 @@ async function generateKeys() {
     outputs.compressed.textContent = data.compressed;
     outputs.uncompressed.textContent = data.uncompressed;
     copyButtons.forEach((btn) => {
-      btn.hidden = false;
+      const isAdvancedControl = btn.hasAttribute("data-advanced-control");
+      btn.hidden = isAdvancedControl ? !advancedMode : false;
       btn.classList.remove("copied");
     });
     copyFeedbacks.forEach((box) => {
@@ -64,6 +101,7 @@ async function generateKeys() {
       box.hidden = true;
     });
     setStatus("New keypair generated", "success");
+    syncAdvancedState();
   } catch (err) {
     console.error(err);
     setStatus("Failed to generate keypair", "error");
@@ -91,8 +129,10 @@ async function handleCopy(event) {
     await navigator.clipboard.writeText(text);
     copyButtons.forEach((btn) => {
       btn.classList.remove("copied");
-      btn.hidden = false;
+      const isAdvancedControl = btn.hasAttribute("data-advanced-control");
+      btn.hidden = isAdvancedControl ? !advancedMode : false;
     });
+    syncAdvancedState();
     button.classList.add("copied");
     const labelEl = valueEl.closest(".output")?.querySelector(".output-label");
     const label = labelEl ? labelEl.textContent.trim() : key;
@@ -148,6 +188,19 @@ async function handleCopy(event) {
 copyButtons.forEach((button) => {
   button.addEventListener("click", handleCopy);
 });
+
+function initAdvancedToggle() {
+  if (!advancedToggle) {
+    return;
+  }
+  advancedToggle.addEventListener("click", () => {
+    advancedMode = !advancedMode;
+    syncAdvancedState();
+  });
+}
+
+initAdvancedToggle();
+syncAdvancedState();
 
 (async () => {
   try {
