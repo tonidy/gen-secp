@@ -28,10 +28,36 @@ cd gen-secp
 uv sync
 ```
 
+Or install directly from PyPI:
+
+```bash
+uv tool install gen-secp
+```
+
 If you want to enable the optional coincurve-backed CLI mode (for PEM export), install the extra:
 
 ```bash
 uv sync --extra coincurve
+```
+
+3. Install as a tool (optional):
+
+This makes `genkey` available globally:
+
+```bash
+uv tool install .
+```
+
+Now you can run `genkey` directly without `uv run`:
+
+```bash
+genkey
+```
+
+To update after pulling new changes:
+
+```bash
+uv tool update
 ```
 
 ## Usage

@@ -1,9 +1,12 @@
 [project]
 name = "gen-secp"
-version = "0.1.0"
+version = "0.1.1"
 description = "Generate secp256k1 keypair CLI"
 requires-python = ">=3.13"
 dependencies = []
+license = {text = "MIT"}
+authors = [{name = "tonidy", email = "toni@toni.dev"}]
+readme = "README.md"
 
 [project.optional-dependencies]
 coincurve = [
