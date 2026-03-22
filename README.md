@@ -15,49 +15,30 @@ Requirements:
 
 ## Installation
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/tonidy/gen-secp.git
-cd gen-secp
-```
-
-2. Install the packages:
-
-```bash
-uv sync
-```
-
-Or install directly from PyPI:
+Install directly from PyPI (recommended):
 
 ```bash
 uv tool install gen-secp
 ```
 
-If you want to enable the optional coincurve-backed CLI mode (for PEM export), install the extra:
+Or for development, clone and install locally:
 
 ```bash
-uv sync --extra coincurve
-```
-
-3. Install as a tool (optional):
-
-This makes `genkey` available globally:
-
-```bash
+git clone https://github.com/tonidy/gen-secp.git
+cd gen-secp
 uv tool install .
-```
-
-Now you can run `genkey` directly without `uv run`:
-
-```bash
-genkey
 ```
 
 To update after pulling new changes:
 
 ```bash
 uv tool update
+```
+
+For PEM export support, install with coincurve extra:
+
+```bash
+uv sync --extra coincurve
 ```
 
 ## Usage
