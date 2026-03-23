@@ -31,12 +31,12 @@ def cli():
     p.add_argument(
         "--long",
         action="store_true",
-        help="Show compressed and uncompressed public key details.",
+        help="show compressed and uncompressed public key details.",
     )
     p.add_argument(
         "--save",
         "-s",
-        help="Save private key (hex) to a file and public key details to <name>.pub.txt",
+        help="save private key (hex) to a file and public key details to <name>.pub.txt",
         nargs="?",
         const="key",
         default=None,
@@ -44,7 +44,7 @@ def cli():
     p.add_argument(
         "--coincurve",
         action="store_true",
-        help="Use coincurve (requires the coincurve package) for key generation and PEM export.",
+        help="use coincurve (requires the coincurve package) for key generation and PEM export.",
     )
     args = p.parse_args()
 
