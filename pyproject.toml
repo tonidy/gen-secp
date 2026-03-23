@@ -1,6 +1,6 @@
 [project]
 name = "gen-secp"
-version = "0.1.3"
+version = "0.1.4"
 description = "Generate secp256k1 keypair CLI"
 requires-python = ">=3.13"
 dependencies = []

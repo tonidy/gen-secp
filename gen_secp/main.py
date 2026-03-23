@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
 import argparse
+import tomllib
 from pathlib import Path
 from typing import Optional, Tuple
 
 from .core import generate_keypair
+
+
+def get_version() -> str:
+    """Read version from pyproject.toml."""
+    # pyproject.toml is in the project root (parent of gen_secp directory)
+    root_dir = Path(__file__).parent.parent
+    pyproject_path = root_dir / "pyproject.toml"
+    with pyproject_path.open("rb") as f:
+        data = tomllib.load(f)
+    return data["project"]["version"]
 
 
 def generate(use_coincurve: bool = False) -> Tuple[str, str, str, Optional["PrivateKey"]]:
@@ -45,6 +56,13 @@ def cli():
         "--coincurve",
         action="store_true",
         help="use coincurve (requires the coincurve package) for key generation and PEM export.",
+    )
+    p.add_argument(
+        "--version",
+        "-V",
+        action="version",
+        version=get_version(),
+        help="show version number and exit.",
     )
     args = p.parse_args()
 
