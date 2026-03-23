@@ -1,6 +1,6 @@
 [project]
 name = "gen-secp"
-version = "0.1.4"
+version = "0.1.5"
 description = "Generate secp256k1 keypair CLI"
 requires-python = ">=3.13"
 dependencies = []
@@ -20,5 +20,13 @@ coincurve = [
 [project.scripts]
 genkey = "gen_secp.main:cli"
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.uv]
 package = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["gen_secp"]
+
